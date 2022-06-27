@@ -7,7 +7,6 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
     private  final NavegadorUI vista;
 
     public ActionsBotonesNavegadorGUI(NavegadorUI vista){
-
         this.vista = vista;
     }
     @Override

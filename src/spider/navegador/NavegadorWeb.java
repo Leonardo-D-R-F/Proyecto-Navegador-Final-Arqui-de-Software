@@ -15,11 +15,8 @@ public class NavegadorWeb {
     }
     public String request(String busqueda){
 
-        System.out.println("Buscando.."+busqueda);
         String pedido = "GET;"+busqueda;
-        System.out.println("Pedido:"+pedido);
         String respuesta = ejecutarPedidio(pedido);
-
         return respuesta;
     }
     private String ejecutarPedidio(String pedido){
@@ -30,8 +27,6 @@ public class NavegadorWeb {
 
         String cadena1 = pedido.substring(0,pedido.indexOf(';'));
         String cadena2 = pedido.substring(pedido.indexOf(';')+1);
-        System.out.println(cadena1);
-        System.out.println(cadena2);
         String host = "127.0.0.1";
         int puerto = 8080;
         String respuestaHTTP = "";
