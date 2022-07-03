@@ -9,25 +9,31 @@ import java.net.Socket;
 
 public class NavegadorWeb {
     NavegadorUI front;
-    public NavegadorWeb(){}
+    Internet internet;
+    public NavegadorWeb(){
+        try {
+            internet = new Internet();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void run(){
         front = new NavegadorUI(this);
     }
-    public String request(String busqueda){
+    public String request(String busqueda) throws IOException {
 
         String pedido = "GET;"+busqueda;
-        String respuesta = ejecutarPedidio(pedido);
+        String respuesta = ejecutarPedido(pedido);
         return respuesta;
     }
-    private String ejecutarPedidio(String pedido){
-//        String[] parts = pedido.split(";",-1);
-//        String part1 = parts[0];
-//        String part2 = parts[1];
-//        String part3 = parts[2];
+    private String ejecutarPedido(String pedido) throws IOException {
+        // String cadena1 = pedido.substring(0,pedido.indexOf(';'));
+        // String cadena2 = pedido.substring(pedido.indexOf(';')+1);
 
-        String cadena1 = pedido.substring(0,pedido.indexOf(';'));
-        String cadena2 = pedido.substring(pedido.indexOf(';')+1);
-        String host = "127.0.0.1";
+        String [] informacionPedido = pedido.split(";");
+        String nombreServidor = informacionPedido[1];
+        String ip = internet.resolverNombre(nombreServidor);
+        String host = ip;
         int puerto = 8080;
         String respuestaHTTP = "";
 
@@ -38,12 +44,11 @@ public class NavegadorWeb {
             DataOutputStream out;
 
             out = new DataOutputStream(sc.getOutputStream());
-            out.writeUTF(cadena1+";"+cadena2);
+            out.writeUTF(pedido);
             in = new DataInputStream(sc.getInputStream());
             String mensaje = in.readUTF();
 
             respuestaHTTP = mensaje;
-
             sc.close();
         }catch (IOException e){
             throw  new RuntimeException(e);
