@@ -10,24 +10,34 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Internet {
+
     HashMap <String, String> map = new HashMap<String, String>();
 
-    public  Internet() throws IOException {
+    public Internet(){
        leerArchivosDns();
     }
 
-    private void leerArchivosDns() throws IOException {
+    private void leerArchivosDns() {
         String fileName = "./dns.txt";
-        Scanner scan = new Scanner(new File(fileName));
+        Scanner scan = null;
+        try {
+            scan = new Scanner(new File(fileName));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         while(scan.hasNextLine()){
             String line = scan.nextLine();
             String [] nombreServidorYIP = line.split(";");
             String nombreServidor = nombreServidorYIP[0];
             String ip = nombreServidorYIP[1];
-            registrar(nombreServidor,ip);
+            try {
+                registrar(nombreServidor,ip);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-    public void registrar(String nombre,String ip) throws IOException {
+    private void registrar(String nombre,String ip) throws IOException {
         String nombreServidor= map.get(nombre);
         if (nombreServidor == null){
             map.put(nombre,ip);

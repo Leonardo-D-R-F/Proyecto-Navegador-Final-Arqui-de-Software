@@ -19,7 +19,7 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
                 String pedido = vista.cuadroDeBusqueda.getText();
                 String respuesta = null;
                 try {
-                    respuesta = vista.navegadorWeb.request(pedido);
+                    respuesta = vista.navegadorWeb.ejecutarPedido(pedido);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }

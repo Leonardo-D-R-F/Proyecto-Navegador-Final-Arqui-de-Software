@@ -1,7 +1,5 @@
 package spider.navegador.frontend;
 
-import spider.navegador.NavegadorWeb;
-
 import javax.swing.*;
 import java.awt.*;
 

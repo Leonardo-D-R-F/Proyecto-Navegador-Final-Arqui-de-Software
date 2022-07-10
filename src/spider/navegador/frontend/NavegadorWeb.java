@@ -1,6 +1,6 @@
-package spider.navegador;
+package spider.navegador.frontend;
 
-import spider.navegador.frontend.*;
+import spider.navegador.Internet;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,32 +10,19 @@ import java.net.Socket;
 public class NavegadorWeb {
     NavegadorUI front;
     Internet internet;
-    public NavegadorWeb(){
-        try {
-            internet = new Internet();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public NavegadorWeb(Internet internet){
+            this.internet = internet;
     }
-    public void run(){
-        front = new NavegadorUI(this);
-    }
-    public String request(String busqueda) throws IOException {
-
-        String pedido = "GET;"+busqueda;
-        String respuesta = ejecutarPedido(pedido);
-        return respuesta;
-    }
-    private String ejecutarPedido(String pedido) throws IOException {
+    public String ejecutarPedido(String url) throws IOException {
         // String cadena1 = pedido.substring(0,pedido.indexOf(';'));
         // String cadena2 = pedido.substring(pedido.indexOf(';')+1);
 
-        String [] informacionPedido = pedido.split(";");
-        String nombreServidor = informacionPedido[1];
+        String [] informacionUrl = url.split(";");
+        String nombreServidor = informacionUrl[0];
         String ip = internet.resolverNombre(nombreServidor);
         String host = ip;
         int puerto = 8080;
-        String respuestaHTTP = "";
+        String respuesta = "";
 
         Socket sc = null;
         try {
@@ -44,15 +31,18 @@ public class NavegadorWeb {
             DataOutputStream out;
 
             out = new DataOutputStream(sc.getOutputStream());
-            out.writeUTF(pedido);
+            out.writeUTF("GET;"+url);
             in = new DataInputStream(sc.getInputStream());
             String mensaje = in.readUTF();
 
-            respuestaHTTP = mensaje;
+            respuesta = mensaje;
             sc.close();
         }catch (IOException e){
             throw  new RuntimeException(e);
         }
-        return respuestaHTTP;
+        return respuesta;
+    }
+    public void run(){
+        front = new NavegadorUI(this);
     }
 }
