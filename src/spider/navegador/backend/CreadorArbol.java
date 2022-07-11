@@ -56,31 +56,6 @@ public class CreadorArbol {
            this.arbol.insertarHijo(body);
        }
     }
-    public static void main(String[] args) {
-        String documento =
-
-                        "<HTML>"+"\n"+
-                        "<BODY>"+"\n"+
-                        "<P>Ir a </P><A 1>Contenido 1</A><P> sigue el texto 1.</P>"+"\n"+
-                        "<P>Ir a </P><A 2>Contenido 2</A><P> sigue el texto 2.</P>"+"\n"+
-                        "</BODY>\n"+
-                        "</HTML>";
-
-
-//                "<HTML>"+"/n"+
-//                "<BODY>"+"/n"+
-//                "<H1>Documento 2</H1><H1>PRUEBA</H1>"+"/n"+
-//                "<P>Este es el texto de la primera seccion.</P>"+"/n"+
-//                "<H2>Subseccion</H2>"+"/n"+
-//                "<P>Contenido de la subseccion 1.</P>"+"/n"+
-//                "<H2>Subseccion</H2>"+"/n"+
-//                "<P>Contenido de la subseccion 2</P>"+"/n"+
-//                "</BODY>"+"/n"+
-//                "</HTML>";
-
-                CreadorArbol creador = new CreadorArbol();
-                EtiquetaHTML prueba = creador.crearDOM(documento);
-    }
     private String getContenidoDeTag(String html){
         String [] document = html.split(">");
         List <String> documentList = new ArrayList<>();
