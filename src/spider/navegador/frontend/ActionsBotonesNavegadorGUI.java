@@ -1,5 +1,6 @@
 package spider.navegador.frontend;
 
+import spider.navegador.ServerNameNotFound;
 import spider.navegador.arbolHTML.*;
 import spider.navegador.backend.CreadorArbol;
 
@@ -20,93 +21,56 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
 
         String comando = e.getActionCommand();
         switch (comando){
-            case "Buscar" -> {
-                String pedido = vista.cuadroDeBusqueda.getText();
-                String respuesta = null;
-                try {
-                    respuesta = vista.navegadorWeb.ejecutarPedido(pedido);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                String [] CodigoYRecurso = respuesta.split(";");
-                String Codigo = CodigoYRecurso[0];
-
-                String Recurso = CodigoYRecurso[1];
-                CreadorArbol creadorArbol = new CreadorArbol();
-                System.out.println(Recurso);
-                EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
-
-                JComponent panel = arbolHTML.graficar();
-                buscarLabel((JPanel) panel);
-                vista.despliegueDeInfomracion.removeAll();
-                vista.despliegueDeInfomracion.add(panel);
-                vista.despliegueDeInfomracion.setVisible(false);
-                vista.despliegueDeInfomracion.setVisible(true);
-                //this.vista.actualizarFront();
-            }
+            case "Buscar" -> desplegarPedido(vista.cuadroDeBusqueda.getText());
             case "Contenido 1" -> {
-                System.out.println("Boton contenido 1 funciona");
-                String respuesta = null;
-                try {
-                    respuesta = vista.navegadorWeb.ejecutarPedido("www.leonardoroldan.as;contenido1.html");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                String [] CodigoYRecurso = respuesta.split(";");
-                String Codigo = CodigoYRecurso[0];
-
-                String Recurso = CodigoYRecurso[1];
-                CreadorArbol creadorArbol = new CreadorArbol();
-                System.out.println(Recurso);
-                EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
-                JComponent panel = arbolHTML.graficar();
-                buscarLabel((JPanel) panel);
-                vista.despliegueDeInfomracion.removeAll();
-                vista.despliegueDeInfomracion.add(panel);
-                vista.despliegueDeInfomracion.setVisible(false);
-                vista.despliegueDeInfomracion.setVisible(true);
+                String [] nombreServidor = vista.cuadroDeBusqueda.getText().split(";");
+                desplegarPedido(nombreServidor[0]+";"+"contenido1.html");
             }
             case "Contenido 2" -> {
-                System.out.println("Boton contenido 2 funciona");
-                String respuesta = null;
-                try {
-                    respuesta = vista.navegadorWeb.ejecutarPedido("www.leonardoroldan.as;contenido2.html");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                String [] CodigoYRecurso = respuesta.split(";");
-                String Codigo = CodigoYRecurso[0];
-
-                String Recurso = CodigoYRecurso[1];
-                CreadorArbol creadorArbol = new CreadorArbol();
-                System.out.println(Recurso);
-                EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
-                JComponent panel = arbolHTML.graficar();
-                buscarLabel((JPanel) panel);
-                vista.despliegueDeInfomracion.removeAll();
-                vista.despliegueDeInfomracion.add(panel);
-                vista.despliegueDeInfomracion.setVisible(false);
-                vista.despliegueDeInfomracion.setVisible(true);
+                String [] nombreServidor = vista.cuadroDeBusqueda.getText().split(";");
+                desplegarPedido(nombreServidor[0]+";"+"contenido2.html");
             }
         }
     }
-    private void recorrerLista (Component componente){
+    private void recorrerLista(Component componente){
         try{
             JPanel aux = (JPanel) componente;
             buscarLabel(aux);
-        }catch (Exception e){}
+        }catch (Exception ignored){}
         try {
-            aniadirListener(componente);
-        } catch (Exception e){}
+            aniadirActionListener(componente);
+        } catch (Exception ignored){}
     }
     public void buscarLabel(JPanel panel){
         Component[] lista = panel.getComponents();
-        for (int i = 0; i < lista.length; i++) {
-            recorrerLista(lista[i]);
+        for (Component component : lista) {
+            recorrerLista(component);
         }
     }
-     private void aniadirListener(Component componente){
+     private void aniadirActionListener(Component componente){
         JButton aux = (JButton) componente;
         aux.addActionListener(this);
+     }
+     private void desplegarPedido(String pedidoNavegador){
+         String respuesta = null;
+         try {
+             respuesta = vista.navegadorWeb.ejecutarPedido(pedidoNavegador);
+         } catch (IOException ex) {
+             throw new RuntimeException(ex);
+         } catch (ServerNameNotFound ex) {
+             ex.printStackTrace();
+         }
+         assert respuesta != null;
+         String [] CodigoYRecurso = respuesta.split(";");
+         String Recurso = CodigoYRecurso[1];
+         CreadorArbol creadorArbol = new CreadorArbol();
+         System.out.println(Recurso);
+         EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
+         JComponent panel = arbolHTML.graficar();
+         buscarLabel((JPanel) panel);
+         vista.despliegueDeInfomracion.removeAll();
+         vista.despliegueDeInfomracion.add(panel);
+         vista.despliegueDeInfomracion.setVisible(false);
+         vista.despliegueDeInfomracion.setVisible(true);
      }
 }

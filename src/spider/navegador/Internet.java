@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Internet {
 
-    HashMap <String, String> map = new HashMap<String, String>();
+    HashMap <String, String> map = new HashMap<>();
 
     public Internet(){
        leerArchivosDns();
@@ -25,7 +24,9 @@ public class Internet {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        while(scan.hasNextLine()){
+        while(true){
+            assert scan != null;
+            if (!scan.hasNextLine()) break;
             String line = scan.nextLine();
             String [] nombreServidorYIP = line.split(";");
             String nombreServidor = nombreServidorYIP[0];
@@ -49,9 +50,11 @@ public class Internet {
         }
         map.put(nombre,ip);
     }
-    public String resolverNombre(String nombre){
-        String ip = map.get(nombre);
-        return ip;
+    public String resolverNombre(String nombre) throws ServerNameNotFound {
+        if(!map.containsKey(nombre)){
+            throw  new ServerNameNotFound("Servidor no encontrado");
+        }
+        return map.get(nombre);
     }
     private void registrarEnTextDNS(String nombre,String ip) throws IOException {
         if(!existeRegistroEnText(nombre)){

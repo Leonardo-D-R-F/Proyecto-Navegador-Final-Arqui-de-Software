@@ -2,16 +2,12 @@ package spider.navegador.frontend;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-
 public class NavegadorUI {
     JFrame vista = new JFrame();
     JPanel barraDeBusqueda;
     JPanel despliegueDeInfomracion;
     JButton btnBuscar;
     JTextField cuadroDeBusqueda;
-    JTextArea contenido;
     ActionsBotonesNavegadorGUI mb = new ActionsBotonesNavegadorGUI(this);
 
     public NavegadorWeb navegadorWeb;

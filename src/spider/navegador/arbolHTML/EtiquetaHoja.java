@@ -18,32 +18,21 @@ public class EtiquetaHoja implements EtiquetaHTML{
     public String toString(){
         return this.contenido;
     }
-
     @Override
     public JComponent graficar() {
         JComponent componenteGrafico= null;
         if(this.tipoDeEtiqueta == H1) {
-            componenteGrafico = new JLabel(this.contenido);
-            componenteGrafico.setFont(new Font("Verdana", Font.BOLD, 18));
-            componenteGrafico.setBounds(0,0,100,50);
+            componenteGrafico = crearLabel(Font.BOLD,18);
         }if(this.tipoDeEtiqueta == H2) {
-            componenteGrafico = new JLabel(this.contenido);
-            componenteGrafico.setFont(new Font("Verdana", Font.BOLD, 16));
-            componenteGrafico.setBounds(0,0,100,50);
+            componenteGrafico = crearLabel(Font.BOLD,16);
         }if(this.tipoDeEtiqueta == P) {
-            componenteGrafico = new JLabel(this.contenido);
-            componenteGrafico.setFont(new Font("Verdana", Font.PLAIN, 16));
-            componenteGrafico.setBounds(0,0,100,50);
+            componenteGrafico = crearLabel(Font.PLAIN,16);
         }if(this.tipoDeEtiqueta == A) {
-//            componenteGrafico = new JLabel(this.contenido);
-//            componenteGrafico.setForeground(Color.BLUE.darker());
-//            componenteGrafico.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             componenteGrafico = new JButton(this.contenido);
             componenteGrafico.setBounds(0,0,70,20);
         }
         return componenteGrafico;
     }
-
     @Override
     public String desplegar() {
         String red="\033[31m";
@@ -61,5 +50,10 @@ public class EtiquetaHoja implements EtiquetaHTML{
             respuesta = yellow+this.contenido;
         }
     return respuesta;
+    }
+    private JLabel crearLabel(int fount,int tamanio ){
+        JLabel label = new JLabel(this.contenido);
+        label.setFont(new Font("Verdana", fount, tamanio));
+        return label;
     }
 }

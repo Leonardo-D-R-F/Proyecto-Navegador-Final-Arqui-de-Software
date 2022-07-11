@@ -6,7 +6,6 @@ import static spider.navegador.arbolHTML.EtiquetaEnum.*;
 
 public class MainArbolPrueba {
     public static void main(String[] args) {
-
         EtiquetaHTML p1 = new EtiquetaHoja(P,"Ir a");
         EtiquetaHTML a1 = new EtiquetaHoja(A,"Contenido 1");
         EtiquetaHTML p2 = new EtiquetaHoja(P,"sigue el texto 1");
@@ -23,8 +22,6 @@ public class MainArbolPrueba {
         EtiquetaRama html = new EtiquetaRama(HTML);
         html.insertarHijo(body);
 
-        //body.graficar();
-        //html.graficar();
         JFrame vista = new JFrame();
         vista.setBounds(0, 0, 750, 651);
         vista.setResizable(false);
@@ -34,6 +31,5 @@ public class MainArbolPrueba {
 
         vista.add(html.graficar());
         System.out.println(html.desplegar());
-
     }
 }

@@ -27,11 +27,9 @@ public class CreadorArbol {
            String tagBody = getContenidoDeTag(getContenidoDeTag(html));
            String limpiandoDeEspacios = tagBody.replace("\n","");
            String [] Hojas = limpiandoDeEspacios.split("/",-1);
-           System.out.println("Cantidad de hojas:" + Hojas.length);
 
            for (int i = 0; i < Hojas.length-1; i++) {
                if (contieneEtiquetaHojaDeRedireccion(Hojas[i])){
-                   System.out.println(Hojas[i]+"==================================================AAAAAAA");
                    int inicio = Hojas[i].indexOf(">");
                    int fin = segundaOcurrenciaDelCaracter(Hojas[i]);
                    String contenido = Hojas[i].substring(inicio+1,fin);
@@ -40,8 +38,7 @@ public class CreadorArbol {
                    }
                    EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
                    EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
-                   System.out.println("Etiqueta ; "+etiqueta);
-                   System.out.println(contenido);
+
                    body.insertarHijo(element);
                }
                else{
@@ -53,8 +50,6 @@ public class CreadorArbol {
                    }
                    EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
                    EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
-                   System.out.println("Etiqueta ; "+etiqueta);
-                   System.out.println(contenido);
                    body.insertarHijo(element);
                }
            }
@@ -85,18 +80,15 @@ public class CreadorArbol {
 
                 CreadorArbol creador = new CreadorArbol();
                 EtiquetaHTML prueba = creador.crearDOM(documento);
-                System.out.println(prueba);
     }
     private String getContenidoDeTag(String html){
         String [] document = html.split(">");
         List <String> documentList = new ArrayList<>();
         for (int i = 0; i < document.length ; i++) {
                 documentList.add(document[i]+">");
-                System.out.println(document[i]+">");
         }
         documentList.remove(0);
         documentList.remove(documentList.size()-1);
-        System.out.println(documentList.size());
         StringBuilder documento = new StringBuilder();
         boolean firstElement = true;
         for (String s : documentList) {
@@ -113,17 +105,9 @@ public class CreadorArbol {
     private boolean formatoHTMLvalido(String html){
         boolean respuesta = false;
         if(conEtiquetaHTMLValidas(html)){
-            System.out.println("Formato HTML VALIDO");
             if(conEtiquetaBODYValidas(getContenidoDeTag(html))){
-                System.out.println("Formato BODY VALIDO");
                 respuesta = true;
             }
-            else{
-                System.out.println("Formato BODY invalido");
-            }
-        }
-        else{
-            System.out.println("Formato HTML invalido");
         }
         return respuesta;
     }

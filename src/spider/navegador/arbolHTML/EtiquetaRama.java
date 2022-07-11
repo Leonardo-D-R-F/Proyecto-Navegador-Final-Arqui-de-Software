@@ -29,20 +29,16 @@ public class EtiquetaRama extends JFrame implements EtiquetaHTML{
         JPanel jpanel = new JPanel();
         jpanel.setLayout(null);
         if(this.tipoDeEtiqueta == BODY){
-
-            //EtiquetaRama body = (EtiquetaRama) ListaDeEtiqueta.get(0);
             jpanel.setBounds(0,0,1000,600);
-            for (int i = 0; i < ListaDeEtiqueta.size(); i++) {
-                EtiquetaHTML e = ListaDeEtiqueta.get(i);
-                JComponent componente= e.graficar();
-                componente.setBounds(posiX,posiY,200,30);
+            for (EtiquetaHTML e : ListaDeEtiqueta) {
+                JComponent componente = e.graficar();
+                componente.setBounds(posiX, posiY, 350, 30);
                 jpanel.add(componente);
                 posiY = posiY + 30;
             }
         }else{
             jpanel = (JPanel) ListaDeEtiqueta.get(0).graficar();
         }
-
         return jpanel;
     }
     public void insertarHijo(EtiquetaHTML hijo){
@@ -50,24 +46,16 @@ public class EtiquetaRama extends JFrame implements EtiquetaHTML{
     }
     @Override
     public String desplegar() {
-
-        String cadena = "";
-
+        StringBuilder cadena = new StringBuilder();
         if(this.tipoDeEtiqueta == BODY){
-
-            //EtiquetaRama body = (EtiquetaRama) ListaDeEtiqueta.get(0);
-
-            for (int i = 0; i < ListaDeEtiqueta.size(); i++) {
-                EtiquetaHTML e = ListaDeEtiqueta.get(i);
-                String componente= e.desplegar();
-
-                cadena = cadena + "\n"+componente;
-
+            for (EtiquetaHTML e : ListaDeEtiqueta) {
+                String componente = e.desplegar();
+                cadena.append("\n").append(componente);
             }
         }else{
-            cadena =  ListaDeEtiqueta.get(0).desplegar();
+            cadena = new StringBuilder(ListaDeEtiqueta.get(0).desplegar());
         }
 
-        return cadena;
+        return cadena.toString();
     }
 }
