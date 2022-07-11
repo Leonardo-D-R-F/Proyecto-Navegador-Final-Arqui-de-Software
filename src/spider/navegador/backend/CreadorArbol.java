@@ -6,7 +6,6 @@ import spider.navegador.arbolHTML.EtiquetaHoja;
 import spider.navegador.arbolHTML.EtiquetaRama;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +21,6 @@ public class CreadorArbol {
     }
     private void parsearHtml(String html){
        if(formatoHTMLvalido(html)){
-
            EtiquetaRama body = new EtiquetaRama(BODY);
            System.out.println("formato valido BODY");
            String tagBody = getContenidoDeTag(getContenidoDeTag(html));
@@ -34,7 +32,8 @@ public class CreadorArbol {
                if (contieneEtiquetaHojaDeRedireccion(Hojas[i])){
                    int inicio = Hojas[1].indexOf(">");
                    int fin = Hojas[1].indexOf("<");
-                   StringBuilder contenido = new StringBuilder();
+                   StringBuilder contenido;
+                   contenido = new StringBuilder();
                    for (int j = inicio; j < fin; j++) {
                        contenido.append(Hojas[j]);
                    }
@@ -54,49 +53,56 @@ public class CreadorArbol {
                }
            }
            this.arbol.insertarHijo(body);
-       };
+       }
     }
     public static void main(String[] args) {
         String documento =
-                "<HTML>"+"/n"+
-                "<BODY>"+"/n"+
-                "<H1>Documento 2</H1><H1>PRUEBA</H1>"+"/n"+
-                "<P>Este es el texto de la primera seccion.</P>"+"/n"+
-                "<H2>Subseccion</H2>"+"/n"+
-                "<P>Contenido de la subseccion 1.</P>"+"/n"+
-                "<H2>Subseccion</H2>"+"/n"+
-                "<P>Contenido de la subseccion 2</P>"+"/n"+
-                "</BODY>"+"/n"+
-                "</HTML>";
+
+                        "<HTML>"+"\n"+
+                        "<BODY>"+"\n"+
+                        "<P>Ir a </P><A 1>Contenido 1</A><P> sigue el texto 1.</P>"+"\n"+
+                        "<P>Ir a </P><A 2>Contenido 2</A><P> sigue el texto 2.</P>"+"\n"+
+                        "</BODY>\n"+
+                        "</HTML>";
+
+
+//                "<HTML>"+"/n"+
+//                "<BODY>"+"/n"+
+//                "<H1>Documento 2</H1><H1>PRUEBA</H1>"+"/n"+
+//                "<P>Este es el texto de la primera seccion.</P>"+"/n"+
+//                "<H2>Subseccion</H2>"+"/n"+
+//                "<P>Contenido de la subseccion 1.</P>"+"/n"+
+//                "<H2>Subseccion</H2>"+"/n"+
+//                "<P>Contenido de la subseccion 2</P>"+"/n"+
+//                "</BODY>"+"/n"+
+//                "</HTML>";
 
                 CreadorArbol creador = new CreadorArbol();
-                EtiquetaHTML prueba = null;
-                prueba = creador.crearDOM(documento);
-        System.out.println(prueba);
-
+                EtiquetaHTML prueba = creador.crearDOM(documento);
+                System.out.println(prueba);
     }
     private String getContenidoDeTag(String html){
-        String [] document = html.split("/n");
+        String [] document = html.split("\n");
         List <String> documentList = new ArrayList<>();
-        for (int i = 0; i < document.length; i++) {
-            System.out.println(document[i]);
-            documentList.add(document[i]);
+        for (String value : document) {
+            System.out.println(value);
+            documentList.add(value);
         }
         documentList.remove(0);
         documentList.remove(documentList.size()-1);
         System.out.println(documentList.size());
-        String documento = "";
+        StringBuilder documento = new StringBuilder();
         boolean firstElement = true;
         for (String s : documentList) {
             if(firstElement){
-                documento = s;
+                documento = new StringBuilder(s);
                 firstElement = false;
             }else{
-                documento += "/n" + s;
+                documento.append("\n").append(s);
             }
         }
 
-        return  documento;
+        return documento.toString();
     }
     private boolean formatoHTMLvalido(String html){
         boolean respuesta = false;
@@ -111,27 +117,20 @@ public class CreadorArbol {
         else{
             System.out.println("Formato HTML invalido");
         }
-        //conEtiquetaHTMLValidas(html);
-        //System.out.println(html);
         return respuesta;
     }
     private boolean conEtiquetaHTMLValidas(String html){
         boolean valida = false;
-        List<String> lista = new ArrayList<>();
         String [] document = html.split(">");
-        Collections.addAll(lista, document);
-
-        if(Objects.equals(document[0], "<HTML") && Objects.equals(document[document.length - 1], "/n</HTML")){
+        if(Objects.equals(document[0], "<HTML") && Objects.equals(document[document.length - 1], "\n</HTML")){
             valida = true;
         }
         return valida;
     }
     private boolean conEtiquetaBODYValidas (String html){
         boolean valida = false;
-        List<String> lista = new ArrayList<>();
         String [] document = html.split(">");
-        Collections.addAll(lista, document);
-        if(Objects.equals(document[0], "<BODY") && Objects.equals(document[document.length - 1], "/n</BODY")){
+        if(Objects.equals(document[0], "<BODY") && Objects.equals(document[document.length - 1], "\n</BODY")){
             valida = true;
         }
         return valida;
@@ -181,7 +180,7 @@ public class CreadorArbol {
     private String eliminarEtiqueta(String cadena){
         String aux = cadena;
         int inicio = cadena.indexOf("<");
-        int fin = cadena.indexOf(">");;
+        int fin = cadena.indexOf(">");
         for (int i = inicio; i < fin; i++) {
             String caracter = cadena.charAt(i)+"";
             aux = aux.replace(caracter,"");
