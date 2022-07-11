@@ -31,7 +31,7 @@ public class EtiquetaRama extends JFrame implements EtiquetaHTML{
         if(this.tipoDeEtiqueta == BODY){
 
             //EtiquetaRama body = (EtiquetaRama) ListaDeEtiqueta.get(0);
-            jpanel.setBounds(0,40,500,500);
+            jpanel.setBounds(0,0,1000,600);
             for (int i = 0; i < ListaDeEtiqueta.size(); i++) {
                 EtiquetaHTML e = ListaDeEtiqueta.get(i);
                 JComponent componente= e.graficar();

@@ -2,6 +2,8 @@ package spider.navegador.frontend;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 public class NavegadorUI {
     JFrame vista = new JFrame();
@@ -40,34 +42,11 @@ public class NavegadorUI {
         this.despliegueDeInfomracion.setLayout(null);
         this.despliegueDeInfomracion.setBounds(0,46,900 ,620);
         this.despliegueDeInfomracion.setBackground(Color.white);
-
-       // actualizarPagina();
-//        this.contenido = new JTextArea();
-//        this.contenido.setLayout(null);
-//        this.contenido.setBounds(10,10,900 ,620);
-//        this.despliegueDeInfomracion.add(contenido);
-//
         this.vista.add(despliegueDeInfomracion);
-
-        //
         run();
 
     }
-    private void actualizarPagina(){
-        JButton button = new JButton("Hola");
-        button.setBounds(50,50,200,50);
-        JButton button2 =  new JButton("Adios");
-        button2.setBounds(100,100,200,50);
-
-        button2.setBounds(100,100,200,50);
-        JLabel label=  new JLabel("Adios");
-        this.despliegueDeInfomracion.add(button);
-        this.despliegueDeInfomracion.add(button2);
-        this.despliegueDeInfomracion.add(label);
-    }
     public void run() {
         this.vista.setVisible(true);
-        //
     }
-
 }

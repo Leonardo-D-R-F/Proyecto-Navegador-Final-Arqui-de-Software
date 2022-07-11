@@ -20,23 +20,29 @@ public class CreadorArbol {
         return this.arbol;
     }
     private void parsearHtml(String html){
-       if(formatoHTMLvalido(html)){
+        String htmlprocesado = html.replace("\n","");
+        htmlprocesado = htmlprocesado.replace(" ","");
+       if(formatoHTMLvalido(htmlprocesado)){
            EtiquetaRama body = new EtiquetaRama(BODY);
-           System.out.println("formato valido BODY");
            String tagBody = getContenidoDeTag(getContenidoDeTag(html));
-           String limpiandoDeEspacios = tagBody.replace("/n","");
+           String limpiandoDeEspacios = tagBody.replace("\n","");
            String [] Hojas = limpiandoDeEspacios.split("/",-1);
            System.out.println("Cantidad de hojas:" + Hojas.length);
 
            for (int i = 0; i < Hojas.length-1; i++) {
                if (contieneEtiquetaHojaDeRedireccion(Hojas[i])){
-                   int inicio = Hojas[1].indexOf(">");
-                   int fin = Hojas[1].indexOf("<");
-                   StringBuilder contenido;
-                   contenido = new StringBuilder();
-                   for (int j = inicio; j < fin; j++) {
-                       contenido.append(Hojas[j]);
+                   System.out.println(Hojas[i]+"==================================================AAAAAAA");
+                   int inicio = Hojas[i].indexOf(">");
+                   int fin = segundaOcurrenciaDelCaracter(Hojas[i]);
+                   String contenido = Hojas[i].substring(inicio+1,fin);
+                   if (cadenaConEtiqueta(contenido)){
+                       contenido = eliminarEtiqueta(contenido);
                    }
+                   EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
+                   EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
+                   System.out.println("Etiqueta ; "+etiqueta);
+                   System.out.println(contenido);
+                   body.insertarHijo(element);
                }
                else{
                    int inicio = Hojas[i].indexOf(">");
@@ -82,11 +88,11 @@ public class CreadorArbol {
                 System.out.println(prueba);
     }
     private String getContenidoDeTag(String html){
-        String [] document = html.split("\n");
+        String [] document = html.split(">");
         List <String> documentList = new ArrayList<>();
-        for (String value : document) {
-            System.out.println(value);
-            documentList.add(value);
+        for (int i = 0; i < document.length ; i++) {
+                documentList.add(document[i]+">");
+                System.out.println(document[i]+">");
         }
         documentList.remove(0);
         documentList.remove(documentList.size()-1);
@@ -107,7 +113,9 @@ public class CreadorArbol {
     private boolean formatoHTMLvalido(String html){
         boolean respuesta = false;
         if(conEtiquetaHTMLValidas(html)){
+            System.out.println("Formato HTML VALIDO");
             if(conEtiquetaBODYValidas(getContenidoDeTag(html))){
+                System.out.println("Formato BODY VALIDO");
                 respuesta = true;
             }
             else{
@@ -121,8 +129,8 @@ public class CreadorArbol {
     }
     private boolean conEtiquetaHTMLValidas(String html){
         boolean valida = false;
-        String [] document = html.split(">");
-        if(Objects.equals(document[0], "<HTML") && Objects.equals(document[document.length - 1], "\n</HTML")){
+        String [] document = html.split(">",-1);
+        if(Objects.equals(document[0], "<HTML") && Objects.equals(document[document.length - 2], "</HTML")){
             valida = true;
         }
         return valida;
@@ -155,7 +163,7 @@ public class CreadorArbol {
         if(cadena.contains("<P>")){
             tipoEtiqueta = P;
         }
-        if(cadena.contains("<A>")){
+        if(cadena.contains("<A")){
             tipoEtiqueta = A;
         }
         return tipoEtiqueta;
@@ -183,7 +191,7 @@ public class CreadorArbol {
         int fin = cadena.indexOf(">");
         for (int i = inicio; i < fin; i++) {
             String caracter = cadena.charAt(i)+"";
-            aux = aux.replace(caracter,"");
+            aux = aux.replaceFirst(caracter,"");
         }
         aux = aux.replace(">","");
         return aux;

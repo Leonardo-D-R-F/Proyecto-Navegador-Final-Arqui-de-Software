@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ActionsBotonesNavegadorGUI implements ActionListener {
     private  final NavegadorUI vista;
@@ -37,22 +35,78 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
                 CreadorArbol creadorArbol = new CreadorArbol();
                 System.out.println(Recurso);
                 EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
-                List<JComponent> listaParaGraficar = interpreteGrafico(arbolHTML);
-                arbolHTML.graficar();
+
+                JComponent panel = arbolHTML.graficar();
+                buscarLabel((JPanel) panel);
                 vista.despliegueDeInfomracion.removeAll();
-                vista.despliegueDeInfomracion.add(arbolHTML.graficar());
-                //System.out.println(respuesta);
+                vista.despliegueDeInfomracion.add(panel);
+                vista.despliegueDeInfomracion.setVisible(false);
+                vista.despliegueDeInfomracion.setVisible(true);
+                //this.vista.actualizarFront();
+            }
+            case "Contenido 1" -> {
+                System.out.println("Boton contenido 1 funciona");
+                String respuesta = null;
+                try {
+                    respuesta = vista.navegadorWeb.ejecutarPedido("www.leonardoroldan.as;contenido1.html");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                String [] CodigoYRecurso = respuesta.split(";");
+                String Codigo = CodigoYRecurso[0];
+
+                String Recurso = CodigoYRecurso[1];
+                CreadorArbol creadorArbol = new CreadorArbol();
+                System.out.println(Recurso);
+                EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
+                JComponent panel = arbolHTML.graficar();
+                buscarLabel((JPanel) panel);
+                vista.despliegueDeInfomracion.removeAll();
+                vista.despliegueDeInfomracion.add(panel);
+                vista.despliegueDeInfomracion.setVisible(false);
+                vista.despliegueDeInfomracion.setVisible(true);
+            }
+            case "Contenido 2" -> {
+                System.out.println("Boton contenido 2 funciona");
+                String respuesta = null;
+                try {
+                    respuesta = vista.navegadorWeb.ejecutarPedido("www.leonardoroldan.as;contenido2.html");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                String [] CodigoYRecurso = respuesta.split(";");
+                String Codigo = CodigoYRecurso[0];
+
+                String Recurso = CodigoYRecurso[1];
+                CreadorArbol creadorArbol = new CreadorArbol();
+                System.out.println(Recurso);
+                EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
+                JComponent panel = arbolHTML.graficar();
+                buscarLabel((JPanel) panel);
+                vista.despliegueDeInfomracion.removeAll();
+                vista.despliegueDeInfomracion.add(panel);
                 vista.despliegueDeInfomracion.setVisible(false);
                 vista.despliegueDeInfomracion.setVisible(true);
             }
         }
     }
-
-    public List<JComponent> interpreteGrafico(EtiquetaHTML arbol){
-        List<JComponent> jComponents = new ArrayList<>();
-
-        //arbol.
-
-        return jComponents;
+    private void recorrerLista (Component componente){
+        try{
+            JPanel aux = (JPanel) componente;
+            buscarLabel(aux);
+        }catch (Exception e){}
+        try {
+            aniadirListener(componente);
+        } catch (Exception e){}
     }
+    public void buscarLabel(JPanel panel){
+        Component[] lista = panel.getComponents();
+        for (int i = 0; i < lista.length; i++) {
+            recorrerLista(lista[i]);
+        }
+    }
+     private void aniadirListener(Component componente){
+        JButton aux = (JButton) componente;
+        aux.addActionListener(this);
+     }
 }

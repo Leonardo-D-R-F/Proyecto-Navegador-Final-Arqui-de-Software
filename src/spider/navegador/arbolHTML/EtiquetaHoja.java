@@ -35,6 +35,9 @@ public class EtiquetaHoja implements EtiquetaHTML{
             componenteGrafico.setFont(new Font("Verdana", Font.PLAIN, 16));
             componenteGrafico.setBounds(0,0,100,50);
         }if(this.tipoDeEtiqueta == A) {
+//            componenteGrafico = new JLabel(this.contenido);
+//            componenteGrafico.setForeground(Color.BLUE.darker());
+//            componenteGrafico.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             componenteGrafico = new JButton(this.contenido);
             componenteGrafico.setBounds(0,0,70,20);
         }
