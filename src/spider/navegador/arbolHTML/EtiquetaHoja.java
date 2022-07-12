@@ -1,13 +1,10 @@
 package spider.navegador.arbolHTML;
 
 import javax.swing.*;
-
 import java.awt.*;
-
 import static spider.navegador.arbolHTML.EtiquetaEnum.*;
 
 public class EtiquetaHoja implements EtiquetaHTML{
-    //Nodo sin hijos
     EtiquetaEnum tipoDeEtiqueta;
     String contenido;
     public EtiquetaHoja(EtiquetaEnum etiqueta,String contenido){
@@ -16,7 +13,8 @@ public class EtiquetaHoja implements EtiquetaHTML{
     }
     @Override
     public String toString(){
-        return this.contenido;
+        String etiqueta = this.tipoDeEtiqueta.toString();
+        return "<"+etiqueta + ">" + this.contenido+ "</"+etiqueta + ">";
     }
     @Override
     public JComponent graficar() {

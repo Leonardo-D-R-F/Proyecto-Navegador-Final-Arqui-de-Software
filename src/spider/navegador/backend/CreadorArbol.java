@@ -16,13 +16,14 @@ public class CreadorArbol {
 
     public EtiquetaHTML crearDOM(String html){
         //..cuerpo del metodo que procesa el archivo HTML
-        parsearHtml(html);
+        String htmlprocesado2 = html.replace("\n","");
+        parsearHtml(htmlprocesado2);
         return this.arbol;
     }
     private void parsearHtml(String html){
         String htmlprocesado = html.replace("\n","");
         htmlprocesado = htmlprocesado.replace(" ","");
-       if(formatoHTMLvalido(htmlprocesado)){
+       if(formatoDocumentoValido(htmlprocesado)){
            EtiquetaRama body = new EtiquetaRama(BODY);
            String tagBody = getContenidoDeTag(getContenidoDeTag(html));
            String limpiandoDeEspacios = tagBody.replace("\n","");
@@ -77,7 +78,7 @@ public class CreadorArbol {
 
         return documento.toString();
     }
-    private boolean formatoHTMLvalido(String html){
+    private boolean formatoDocumentoValido(String html){
         boolean respuesta = false;
         if(conEtiquetaHTMLValidas(html)){
             if(conEtiquetaBODYValidas(getContenidoDeTag(html))){

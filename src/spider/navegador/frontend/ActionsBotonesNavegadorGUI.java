@@ -58,17 +58,20 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
          } catch (ServerNameNotFound ex) {
              ex.printStackTrace();
          }
-         assert respuesta != null;
-         String [] CodigoYRecurso = respuesta.split(";");
-         String Recurso = CodigoYRecurso[1];
-         CreadorArbol creadorArbol = new CreadorArbol();
-         System.out.println(Recurso);
-         EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
-         JComponent panel = arbolHTML.graficar();
-         buscarLabel((JPanel) panel);
-         vista.despliegueDeInfomracion.removeAll();
-         vista.despliegueDeInfomracion.add(panel);
-         vista.despliegueDeInfomracion.setVisible(false);
-         vista.despliegueDeInfomracion.setVisible(true);
+         if(respuesta != null){
+             String [] CodigoYRecurso = respuesta.split(";");
+             String Recurso = CodigoYRecurso[1];
+             CreadorArbol creadorArbol = new CreadorArbol();
+             System.out.println(Recurso);
+             EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
+             JComponent panel = arbolHTML.graficar();
+             buscarLabel((JPanel) panel);
+             vista.despliegueDeInfomracion.removeAll();
+             vista.despliegueDeInfomracion.add(panel);
+             vista.despliegueDeInfomracion.setVisible(false);
+             vista.despliegueDeInfomracion.setVisible(true);
+         }
+
+
      }
 }

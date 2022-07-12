@@ -15,13 +15,15 @@ public class NavegadorWeb {
             this.internet = internet;
     }
     public String ejecutarPedido(String url) throws ServerNameNotFound {
-
+        int puerto = 8080;
+        String respuesta;
         String [] informacionUrl = url.split(";",-1);
         String nombreServidor = informacionUrl[0];
         String host = internet.resolverNombre(nombreServidor);
-        int puerto = 8080;
-        String respuesta;
-
+        String pedidoRecurso = ";";
+        if(informacionUrl.length>1){
+            pedidoRecurso = informacionUrl[1];
+        }
         Socket sc;
         try {
             sc = new Socket(host, puerto);
@@ -29,7 +31,7 @@ public class NavegadorWeb {
             DataOutputStream out;
 
             out = new DataOutputStream(sc.getOutputStream());
-            out.writeUTF("GET;"+informacionUrl[1]);
+            out.writeUTF("GET;"+pedidoRecurso);
             in = new DataInputStream(sc.getInputStream());
 
             respuesta = in.readUTF();

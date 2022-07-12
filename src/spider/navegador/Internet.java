@@ -49,10 +49,15 @@ public class Internet {
         map.put(nombre,ip);
     }
     public String resolverNombre(String nombre) throws ServerNameNotFound {
-        if(!map.containsKey(nombre)){
-            throw  new ServerNameNotFound("Servidor no encontrado");
+        String resolucion = (String)  map.get(nombre);
+        if(resolucion== null){
+            throw new ServerNameNotFound("Servidor No Encontrado");
         }
-        return map.get(nombre);
+        return resolucion;
+//        if(!map.containsKey(nombre)){
+//            throw  new ServerNameNotFound("Servidor no encontrado");
+//        }
+//        return map.get(nombre);
     }
     private void registrarEnTextDNS(String nombre,String ip) throws IOException {
         if(!existeRegistroEnText(nombre)){
