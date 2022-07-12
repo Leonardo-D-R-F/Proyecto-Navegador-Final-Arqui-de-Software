@@ -14,11 +14,9 @@ public class NavegadorWeb {
     public NavegadorWeb(Internet internet){
             this.internet = internet;
     }
-    public String ejecutarPedido(String url) throws IOException, ServerNameNotFound {
-        // String cadena1 = pedido.substring(0,pedido.indexOf(';'));
-        // String cadena2 = pedido.substring(pedido.indexOf(';')+1);
+    public String ejecutarPedido(String url) throws ServerNameNotFound {
 
-        String [] informacionUrl = url.split(";");
+        String [] informacionUrl = url.split(";",-1);
         String nombreServidor = informacionUrl[0];
         String host = internet.resolverNombre(nombreServidor);
         int puerto = 8080;
@@ -31,7 +29,7 @@ public class NavegadorWeb {
             DataOutputStream out;
 
             out = new DataOutputStream(sc.getOutputStream());
-            out.writeUTF("GET;"+url);
+            out.writeUTF("GET;"+informacionUrl[1]);
             in = new DataInputStream(sc.getInputStream());
 
             respuesta = in.readUTF();

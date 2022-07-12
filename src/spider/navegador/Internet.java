@@ -11,11 +11,9 @@ import java.util.Scanner;
 public class Internet {
 
     HashMap <String, String> map = new HashMap<>();
-
     public Internet(){
        leerArchivosDns();
     }
-
     private void leerArchivosDns() {
         String fileName = "./dns.txt";
         Scanner scan = null;

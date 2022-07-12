@@ -2,3 +2,5 @@ www.google.com;192.168.1.135
 www.fcyt.umss.edu.bo;192.168.1.135
 www.cs.umss.edu.bo;192.168.1.135
 www.leonardoroldan.as;192.168.1.135
+www.rafaelramirez.as;25.80.61.85
+www.javiermartinez.as;25.68.135.49
