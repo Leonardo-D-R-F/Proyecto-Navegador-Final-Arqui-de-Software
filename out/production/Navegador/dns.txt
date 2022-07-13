@@ -1,4 +1,0 @@
-www.google.com;192.168.1.135
-www.fcyt.umss.edu.bo;192.168.1.135
-www.cs.umss.edu.bo;192.168.1.135
-www.leonardoroldan.as;25.74.212.208

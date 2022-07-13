@@ -41,16 +41,20 @@ public class EtiquetaRama extends JFrame implements EtiquetaHTML{
     public String desplegar() {
         StringBuilder cadena = new StringBuilder();
         if(this.tipoDeEtiqueta == BODY){
-            for (EtiquetaHTML e : ListaDeEtiqueta) {
-                String componente = e.desplegar();
-                cadena.append("\n").append(componente);
-            }
+            cadena = desplegarhHijos(this.ListaDeEtiqueta);
         }if(this.tipoDeEtiqueta != BODY){
             cadena = new StringBuilder(ListaDeEtiqueta.get(0).desplegar());
         }
         return cadena.toString();
     }
-
+    public StringBuilder desplegarhHijos(List<EtiquetaHTML> ListaDeEtiquetas){
+        StringBuilder cadenaDeDespliegue = new StringBuilder();
+        for (EtiquetaHTML e : ListaDeEtiquetas) {
+            String componente = e.desplegar();
+            cadenaDeDespliegue.append("\n").append(componente);
+        }
+        return cadenaDeDespliegue;
+    }
     private JPanel graficarPanelDeHijos(List<EtiquetaHTML> listaDehijos){
         JPanel jpanel = new JPanel();
         jpanel.setLayout(new BoxLayout(jpanel, BoxLayout.Y_AXIS));

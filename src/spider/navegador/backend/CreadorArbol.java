@@ -30,29 +30,28 @@ public class CreadorArbol {
            String [] Hojas = limpiandoDeEspacios.split("/",-1);
 
            for (int i = 0; i < Hojas.length-1; i++) {
-               if (contieneEtiquetaHojaDeRedireccion(Hojas[i])){
+//               if (contieneEtiquetaHojaDeRedireccion(Hojas[i])){
+//                   int inicio = Hojas[i].indexOf(">");
+//                   int fin = posicionSegundaOcurrenciaDelCaracter(Hojas[i]);
+//                   String contenido = Hojas[i].substring(inicio+1,fin);
+//                   if (cadenaConEtiqueta(contenido)){
+//                       contenido = eliminarEtiqueta(contenido);
+//                   }
+//                   EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
+//                   EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
+//                   body.insertarHijo(element);
+//               }
+//               else{
                    int inicio = Hojas[i].indexOf(">");
-                   int fin = segundaOcurrenciaDelCaracter(Hojas[i]);
+                   int fin = posicionSegundaOcurrenciaDelCaracter(Hojas[i]);
                    String contenido = Hojas[i].substring(inicio+1,fin);
                    if (cadenaConEtiqueta(contenido)){
                        contenido = eliminarEtiqueta(contenido);
                    }
                    EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
                    EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
-
                    body.insertarHijo(element);
-               }
-               else{
-                   int inicio = Hojas[i].indexOf(">");
-                   int fin = segundaOcurrenciaDelCaracter(Hojas[i]);
-                   String contenido = Hojas[i].substring(inicio+1,fin);
-                   if (cadenaConEtiqueta(contenido)){
-                       contenido = eliminarEtiqueta(contenido);
-                   }
-                   EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
-                   EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
-                   body.insertarHijo(element);
-               }
+               //}
            }
            this.arbol.insertarHijo(body);
        }
@@ -128,20 +127,20 @@ public class CreadorArbol {
         }
         return tipoEtiqueta;
     }
-    private int segundaOcurrenciaDelCaracter(String cadena){
-        char x = '<';
+    private int posicionSegundaOcurrenciaDelCaracter(String cadena){
         int contador = 0;
         int posicion = 0;
         for (int i = 0; i < cadena.length(); i++) {
-            if (cadena.charAt(i)==x){
+            if (cadena.charAt(i)=='<'){
                 contador++;
-                if (contador == 2){
-                    posicion = i;
-                }
+            }
+            if (contador == 2){
+                posicion = i;
             }
         }
         return posicion;
     }
+    
     private Boolean cadenaConEtiqueta(String cadena){
         return cadena.contains("<") && cadena.contains(">");
     }
