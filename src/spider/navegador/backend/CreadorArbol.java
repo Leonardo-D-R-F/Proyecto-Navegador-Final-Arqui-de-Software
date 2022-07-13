@@ -15,7 +15,6 @@ public class CreadorArbol {
     EtiquetaRama arbol = new EtiquetaRama(HTML);
 
     public EtiquetaHTML crearDOM(String html){
-        //..cuerpo del metodo que procesa el archivo HTML
         String htmlprocesado2 = html.replace("\n","");
         parsearHtml(htmlprocesado2);
         return this.arbol;
@@ -30,18 +29,6 @@ public class CreadorArbol {
            String [] Hojas = limpiandoDeEspacios.split("/",-1);
 
            for (int i = 0; i < Hojas.length-1; i++) {
-//               if (contieneEtiquetaHojaDeRedireccion(Hojas[i])){
-//                   int inicio = Hojas[i].indexOf(">");
-//                   int fin = posicionSegundaOcurrenciaDelCaracter(Hojas[i]);
-//                   String contenido = Hojas[i].substring(inicio+1,fin);
-//                   if (cadenaConEtiqueta(contenido)){
-//                       contenido = eliminarEtiqueta(contenido);
-//                   }
-//                   EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
-//                   EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
-//                   body.insertarHijo(element);
-//               }
-//               else{
                    int inicio = Hojas[i].indexOf(">");
                    int fin = posicionSegundaOcurrenciaDelCaracter(Hojas[i]);
                    String contenido = Hojas[i].substring(inicio+1,fin);
@@ -101,9 +88,6 @@ public class CreadorArbol {
             valida = true;
         }
         return valida;
-    }
-    private boolean contieneEtiquetaHojaDeRedireccion(String cadena){
-        return cadena.contains("<A");
     }
     private EtiquetaEnum identificarEtiqueta(String cadena){
         EtiquetaEnum tipoEtiqueta = null;

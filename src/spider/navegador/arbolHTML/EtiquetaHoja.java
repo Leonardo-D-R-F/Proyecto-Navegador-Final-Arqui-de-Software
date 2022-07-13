@@ -45,7 +45,12 @@ public class EtiquetaHoja implements EtiquetaHTML{
         }if(this.tipoDeEtiqueta == P) {
             respuesta = blue+this.contenido;
         }if(this.tipoDeEtiqueta == A) {
-            respuesta = yellow+this.contenido;
+            String variable = this.contenido;
+            int last = variable.length()-1;
+            char link = variable.charAt(last);
+            variable="/"+variable+"/";
+            variable=variable+" (Ingrese '"+link+"' para ir)";
+            respuesta = yellow+variable;
         }
     return respuesta;
     }

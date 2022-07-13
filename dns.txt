@@ -1,5 +1,9 @@
 www.google.com;192.168.1.135
 www.fcyt.umss.edu.bo;192.168.1.135
 www.cs.umss.edu.bo;192.168.1.135
-www.leonardoroldan.as;25.74.56.171
+www.leonardoroldan.as;25.74.212.208
 www.libertadtolaba.as;25.64.31.204
+www.dembycastellon.as;25.74.83.127
+www.danielmariscal.as;25.64.33.30
+www.carolaysirpa.as;25.59.161.83
+www.carlosgrageda.as;25.58.61.211

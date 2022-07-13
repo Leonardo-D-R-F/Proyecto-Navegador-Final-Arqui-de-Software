@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class ActionsBotonesNavegadorGUI implements ActionListener {
     private  final NavegadorUI vista;
@@ -61,6 +60,8 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
          if(respuesta != null){
              String [] CodigoYRecurso = respuesta.split(";");
              String Recurso = CodigoYRecurso[1];
+             Recurso = Recurso.replace("\n","");
+             Recurso = Recurso.replace("\t","");
              CreadorArbol creadorArbol = new CreadorArbol();
              System.out.println(Recurso);
              EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
@@ -71,7 +72,5 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
              vista.despliegueDeInfomracion.setVisible(false);
              vista.despliegueDeInfomracion.setVisible(true);
          }
-
-
      }
 }
