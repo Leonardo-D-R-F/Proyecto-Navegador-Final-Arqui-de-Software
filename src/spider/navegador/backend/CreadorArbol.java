@@ -38,7 +38,6 @@ public class CreadorArbol {
                    EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
                    EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
                    body.insertarHijo(element);
-               //}
            }
            this.arbol.insertarHijo(body);
        }

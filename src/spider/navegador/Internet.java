@@ -54,10 +54,6 @@ public class Internet {
             throw new ServerNameNotFound("Servidor No Encontrado");
         }
         return resolucion;
-//        if(!map.containsKey(nombre)){
-//            throw  new ServerNameNotFound("Servidor no encontrado");
-//        }
-//        return map.get(nombre);
     }
     private void registrarEnTextDNS(String nombre,String ip) throws IOException {
         if(!existeRegistroEnText(nombre)){

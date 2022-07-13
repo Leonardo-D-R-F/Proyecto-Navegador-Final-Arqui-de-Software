@@ -2,7 +2,7 @@ package spider.navegador.frontend;
 
 import javax.swing.*;
 import java.awt.*;
-public class NavegadorUI {
+public class NavegadorUI implements INavegadorUI {
     JFrame vista = new JFrame();
     JPanel barraDeBusqueda;
     JPanel despliegueDeInfomracion;

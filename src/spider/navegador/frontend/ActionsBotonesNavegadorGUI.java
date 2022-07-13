@@ -52,11 +52,7 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
      }
      private void desplegarPedido(String pedidoNavegador){
          String respuesta = null;
-         try {
-             respuesta = vista.navegadorWeb.ejecutarPedido(pedidoNavegador);
-         } catch (ServerNameNotFound ex) {
-             ex.printStackTrace();
-         }
+         respuesta = vista.navegadorWeb.ejecutarPedido(pedidoNavegador);
          if(respuesta != null){
              String [] CodigoYRecurso = respuesta.split(";");
              String Recurso = CodigoYRecurso[1];
