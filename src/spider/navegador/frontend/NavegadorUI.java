@@ -3,43 +3,42 @@ package spider.navegador.frontend;
 import javax.swing.*;
 import java.awt.*;
 public class NavegadorUI implements INavegadorUI {
-    JFrame vista = new JFrame();
-    JPanel barraDeBusqueda;
-    JPanel despliegueDeInfomracion;
-    JButton btnBuscar;
+    private final JFrame vista = new JFrame();
+    JPanel despliegueDeInformacion;
     JTextField cuadroDeBusqueda;
-    ActionsBotonesNavegadorGUI mb = new ActionsBotonesNavegadorGUI(this);
 
     public NavegadorWeb navegadorWeb;
 
     public NavegadorUI(NavegadorWeb navegadorWeb){
         this.navegadorWeb = navegadorWeb;
         this.vista.setBounds(0, 0, 900, 650);
+        this.vista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.vista.setResizable(false);
         this.vista.setLocationRelativeTo(null);
         this.vista.setLayout(null);
 
-        this.barraDeBusqueda = new JPanel();
-        this.barraDeBusqueda.setLayout(null);
+        JPanel barraDeBusqueda = new JPanel();
+        barraDeBusqueda.setLayout(null);
         this.cuadroDeBusqueda = new JTextField();
         this.cuadroDeBusqueda.setBounds(150, 8, 450, 30);
-        this.barraDeBusqueda.add(cuadroDeBusqueda);
+        barraDeBusqueda.add(cuadroDeBusqueda);
 
-        this.btnBuscar = new JButton("Buscar");
-        this.btnBuscar.setBounds(608,8,80,30);
-        this.btnBuscar.addActionListener(mb);
-        this.barraDeBusqueda.add(btnBuscar);
+        JButton btnBuscar = new JButton("Buscar");
+        btnBuscar.setBounds(608,8,80,30);
+        ActionsBotonesNavegadorGUI mb = new ActionsBotonesNavegadorGUI(this);
+        btnBuscar.addActionListener(mb);
+        barraDeBusqueda.add(btnBuscar);
 
-        this.barraDeBusqueda.setBounds(0,0,900 ,46);
-        this.barraDeBusqueda.setBackground(Color.DARK_GRAY);
+        barraDeBusqueda.setBounds(0,0,900 ,46);
+        barraDeBusqueda.setBackground(Color.DARK_GRAY);
         this.vista.add(barraDeBusqueda);
 
-        this.despliegueDeInfomracion = new JPanel();
-        this.despliegueDeInfomracion.setLayout(null);
-        this.despliegueDeInfomracion.setBounds(0,46,900 ,620);
-        this.despliegueDeInfomracion.setBackground(Color.white);
-        this.vista.add(despliegueDeInfomracion);
-        run();
+        this.despliegueDeInformacion = new JPanel();
+        this.despliegueDeInformacion.setLayout(null);
+        this.despliegueDeInformacion.setBounds(0,46,900 ,620);
+        this.despliegueDeInformacion.setBackground(Color.white);
+        this.vista.add(despliegueDeInformacion);
+
 
     }
     public void run() {

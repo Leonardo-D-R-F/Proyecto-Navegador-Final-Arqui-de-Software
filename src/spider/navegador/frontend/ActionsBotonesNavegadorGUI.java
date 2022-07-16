@@ -1,6 +1,5 @@
 package spider.navegador.frontend;
 
-import spider.navegador.ServerNameNotFound;
 import spider.navegador.arbolHTML.*;
 import spider.navegador.backend.CreadorArbol;
 
@@ -51,22 +50,23 @@ public class ActionsBotonesNavegadorGUI implements ActionListener {
         aux.addActionListener(this);
      }
      private void desplegarPedido(String pedidoNavegador){
-         String respuesta = null;
+         String respuesta;
          respuesta = vista.navegadorWeb.ejecutarPedido(pedidoNavegador);
          if(respuesta != null){
              String [] CodigoYRecurso = respuesta.split(";");
              String Recurso = CodigoYRecurso[1];
              Recurso = Recurso.replace("\n","");
              Recurso = Recurso.replace("\t","");
+             Recurso = Recurso.trim();
              CreadorArbol creadorArbol = new CreadorArbol();
              System.out.println(Recurso);
              EtiquetaRama arbolHTML = (EtiquetaRama) creadorArbol.crearDOM(Recurso);
              JComponent panel = arbolHTML.graficar();
              buscarLabel((JPanel) panel);
-             vista.despliegueDeInfomracion.removeAll();
-             vista.despliegueDeInfomracion.add(panel);
-             vista.despliegueDeInfomracion.setVisible(false);
-             vista.despliegueDeInfomracion.setVisible(true);
+             vista.despliegueDeInformacion.removeAll();
+             vista.despliegueDeInformacion.add(panel);
+             vista.despliegueDeInformacion.setVisible(false);
+             vista.despliegueDeInformacion.setVisible(true);
          }
      }
 }

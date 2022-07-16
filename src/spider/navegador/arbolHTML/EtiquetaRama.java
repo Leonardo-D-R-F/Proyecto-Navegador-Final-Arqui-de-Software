@@ -8,8 +8,8 @@ import java.util.List;
 import static spider.navegador.arbolHTML.EtiquetaEnum.*;
 
 public class EtiquetaRama extends JFrame implements EtiquetaHTML{
-    EtiquetaEnum tipoDeEtiqueta;
-    List<EtiquetaHTML> ListaDeEtiqueta;
+    private final EtiquetaEnum tipoDeEtiqueta;
+    private final List<EtiquetaHTML> ListaDeEtiqueta;
     public EtiquetaRama(EtiquetaEnum etiqueta){
         this.tipoDeEtiqueta = etiqueta;
         this.ListaDeEtiqueta = new ArrayList<>();
@@ -19,7 +19,9 @@ public class EtiquetaRama extends JFrame implements EtiquetaHTML{
         String html = this.tipoDeEtiqueta.toString() + "\n";
 
         EtiquetaHTML e;
-        for(Iterator<EtiquetaHTML> var2 = this.ListaDeEtiqueta.iterator(); var2.hasNext(); html = html + e.toString() + "\n") {
+        for(Iterator<EtiquetaHTML> var2 = this.ListaDeEtiqueta.iterator();
+            var2.hasNext();
+            html = html + e.toString() + "\n") {
             e = var2.next();
         }
         return html;

@@ -11,13 +11,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NavegadorWeb {
-    NavegadorUI front;
-    Internet internet;
+    private final Internet internet;
     public NavegadorWeb(Internet internet){
             this.internet = internet;
     }
     public String ejecutarPedido(String url){
-        System.out.println("PEDIDO" + url);
+        System.out.println(url);
         String respuestaPedido = 400+";<HTML><BODY><H1>Bad request</H1></BODY></HTML>";
         if(formatoValido(url)){
             System.out.println("Formato Valido");
@@ -57,10 +56,10 @@ public class NavegadorWeb {
             throw  new RuntimeException(e);
         }
         return respuestaRequest;
-
     }
     public void run(){
-        front = new NavegadorUI(this);
+        NavegadorUI front = new NavegadorUI(this);
+        front.run();
     }
     private boolean formatoValido(String pedido){
         boolean respuesta = false;

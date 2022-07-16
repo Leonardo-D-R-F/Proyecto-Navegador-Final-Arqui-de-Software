@@ -12,7 +12,7 @@ import java.util.Objects;
 import static spider.navegador.arbolHTML.EtiquetaEnum.*;
 
 public class CreadorArbol {
-    EtiquetaRama arbol = new EtiquetaRama(HTML);
+    private final EtiquetaRama arbol = new EtiquetaRama(HTML);
 
     public EtiquetaHTML crearDOM(String html){
         String htmlprocesado2 = html.replace("\n","");
@@ -23,30 +23,32 @@ public class CreadorArbol {
         String htmlprocesado = html.replace("\n","");
         htmlprocesado = htmlprocesado.replace(" ","");
        if(formatoDocumentoValido(htmlprocesado)){
-           EtiquetaRama body = new EtiquetaRama(BODY);
            String tagBody = getContenidoDeTag(getContenidoDeTag(html));
            String limpiandoDeEspacios = tagBody.replace("\n","");
            String [] Hojas = limpiandoDeEspacios.split("/",-1);
-
-           for (int i = 0; i < Hojas.length-1; i++) {
-                   int inicio = Hojas[i].indexOf(">");
-                   int fin = posicionSegundaOcurrenciaDelCaracter(Hojas[i]);
-                   String contenido = Hojas[i].substring(inicio+1,fin);
-                   if (cadenaConEtiqueta(contenido)){
-                       contenido = eliminarEtiqueta(contenido);
-                   }
-                   EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
-                   EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
-                   body.insertarHijo(element);
-           }
-           this.arbol.insertarHijo(body);
+           this.arbol.insertarHijo(parsearHojas(Hojas));
        }
+    }
+    private EtiquetaRama parsearHojas(String [] Hojas){
+        EtiquetaRama body = new EtiquetaRama(BODY);
+        for (int i = 0; i < Hojas.length-1; i++) {
+            int inicio = Hojas[i].indexOf(">");
+            int fin = posicionSegundaOcurrenciaDelCaracter(Hojas[i]);
+            String contenido = Hojas[i].substring(inicio+1,fin);
+            if (cadenaConEtiqueta(contenido)){
+                contenido = eliminarEtiqueta(contenido);
+            }
+            EtiquetaEnum etiqueta = identificarEtiqueta(Hojas[i]);
+            EtiquetaHTML element = new EtiquetaHoja(etiqueta,contenido);
+            body.insertarHijo(element);
+        }
+        return  body;
     }
     private String getContenidoDeTag(String html){
         String [] document = html.split(">");
         List <String> documentList = new ArrayList<>();
-        for (int i = 0; i < document.length ; i++) {
-                documentList.add(document[i]+">");
+        for (String value : document) {
+            documentList.add(value + ">");
         }
         documentList.remove(0);
         documentList.remove(documentList.size()-1);
@@ -64,13 +66,7 @@ public class CreadorArbol {
         return documento.toString();
     }
     private boolean formatoDocumentoValido(String html){
-        boolean respuesta = false;
-        if(conEtiquetaHTMLValidas(html)){
-            if(conEtiquetaBODYValidas(getContenidoDeTag(html))){
-                respuesta = true;
-            }
-        }
-        return respuesta;
+        return conEtiquetaHTMLValidas(html) && conEtiquetaBODYValidas(getContenidoDeTag(html));
     }
     private boolean conEtiquetaHTMLValidas(String html){
         boolean valida = false;
@@ -123,7 +119,7 @@ public class CreadorArbol {
         }
         return posicion;
     }
-    
+
     private Boolean cadenaConEtiqueta(String cadena){
         return cadena.contains("<") && cadena.contains(">");
     }

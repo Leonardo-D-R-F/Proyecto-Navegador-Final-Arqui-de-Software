@@ -5,8 +5,8 @@ import java.awt.*;
 import static spider.navegador.arbolHTML.EtiquetaEnum.*;
 
 public class EtiquetaHoja implements EtiquetaHTML{
-    EtiquetaEnum tipoDeEtiqueta;
-    String contenido;
+    private final EtiquetaEnum tipoDeEtiqueta;
+    private final String contenido;
     public EtiquetaHoja(EtiquetaEnum etiqueta,String contenido){
         this.tipoDeEtiqueta = etiqueta;
         this.contenido = contenido;
